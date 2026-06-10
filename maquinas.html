@@ -4,13 +4,13 @@
 <!--- Fernando Albornoz @Copyright 2026 V1.0    --->
 <!--- Consulta de OT Service  --->
 
+<!-- Máquinas -->
 <head>
     <meta charset="UTF-8">
-    <title>KaiService</title>
+    <title>Máquinas - KAI Service</title>
 
     <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
 	<div class="container">
     
@@ -38,6 +38,46 @@
 </div>
 
 <hr>
+
+<h2>Nueva Máquina</h2>
+
+<label>Cliente</label><br>
+<select id="cliente_id">
+    <option value="">Seleccione un cliente</option>
+</select>
+
+<br><br>
+
+<input type="text" id="tipo_maquina" placeholder="Tipo de máquina"><br><br>
+
+<input type="text" id="maquina" placeholder="Máquina"><br><br>
+
+<input type="text" id="marca" placeholder="Marca"><br><br>
+
+<input type="text" id="modelo" placeholder="Modelo"><br><br>
+
+<input type="text" id="serie" placeholder="N° Serie"><br><br>
+
+<input type="text" id="ubicacion" placeholder="Ubicación"><br><br>
+
+<textarea id="obs_maquina"
+placeholder="Observaciones"></textarea><br><br>
+
+<button onclick="guardarMaquina()">
+Guardar Máquina
+</button>
+
+<hr>
+
+<h2>Máquinas Registradas</h2>
+
+<button onclick="listarMaquinas()">
+Actualizar Máquinas
+</button>
+
+<div id="listaMaquinas"></div>
+</div>
+
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

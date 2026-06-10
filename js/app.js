@@ -119,3 +119,124 @@ async function buscarClientes() {
 
     document.getElementById('listaClientes').innerHTML = html;
 }
+async function cargarClientesSelect() {
+
+    const { data, error } = await supabaseClient
+        .from('clientes')
+        .select('id,nombre')
+        .order('nombre');
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const select = document.getElementById('cliente_id');
+
+    select.innerHTML =
+        '<option value="">Seleccione un cliente</option>';
+
+    data.forEach(cliente => {
+
+        select.innerHTML += `
+            <option value="${cliente.id}">
+                ${cliente.nombre}
+            </option>
+        `;
+    });
+}
+
+
+
+async function guardarMaquina() {
+
+    const cliente_id =
+        document.getElementById('cliente_id').value;
+
+    const tipo_maquina =
+        document.getElementById('tipo_maquina').value;
+
+    const maquina =
+        document.getElementById('maquina').value;
+
+    const marca =
+        document.getElementById('marca').value;
+
+    const modelo =
+        document.getElementById('modelo').value;
+
+    const serie =
+        document.getElementById('serie').value;
+
+    const ubicacion =
+        document.getElementById('ubicacion').value;
+
+    const observaciones =
+        document.getElementById('obs_maquina').value;
+
+    const { error } = await supabaseClient
+        .from('maquinas')
+        .insert([
+            {
+                cliente_id,
+                tipo_maquina,
+                maquina,
+                marca,
+                modelo,
+                serie,
+                ubicacion,
+                observaciones
+            }
+        ]);
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    alert('Máquina guardada correctamente');
+}
+
+async function listarMaquinas() {
+
+    const { data, error } = await supabaseClient
+        .from('maquinas')
+        .select(`
+            *,
+            clientes(nombre)
+        `)
+        .order('maquina');
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    let html = `
+        <table border="1" width="100%">
+            <tr>
+                <th>Cliente</th>
+                <th>Máquina</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Serie</th>
+            </tr>
+    `;
+
+    data.forEach(m => {
+
+        html += `
+            <tr>
+                <td>${m.clientes?.nombre || ''}</td>
+                <td>${m.maquina || ''}</td>
+                <td>${m.marca || ''}</td>
+                <td>${m.modelo || ''}</td>
+                <td>${m.serie || ''}</td>
+            </tr>
+        `;
+    });
+
+    html += '</table>';
+
+    document.getElementById('listaMaquinas').innerHTML = html;
+}

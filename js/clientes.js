@@ -1,0 +1,3 @@
+guardarCliente()
+listarClientes()
+buscarClientes()

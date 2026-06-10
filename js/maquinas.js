@@ -1,0 +1,3 @@
+guardarMaquina()
+listarMaquinas()
+cargarClientesSelect()
