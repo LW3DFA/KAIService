@@ -1,0 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+button {
+    padding: 10px 15px;
+    cursor: pointer;
+}
