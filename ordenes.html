@@ -7,8 +7,7 @@
 <!-- Ordenes -->
 <head>
     <meta charset="UTF-8">
-    <title>Máquinas - KAI Service</title>
-
+    <title>Órdenes - KAI Service</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -18,32 +17,60 @@
 <p>Sistema de Gestión de Reparaciones</p>
 
 <div class="menu-superior">
-
-    <button onclick="location.href='index.html'">
-        🏠 Inicio
-    </button>
-
-    <button onclick="location.href='clientes.html'">
-        👤 Clientes
-    </button>
-
-    <button onclick="location.href='maquinas.html'">
-        ⚙ Máquinas
-    </button>
-
-    <button onclick="location.href='ordenes.html'">
-        📋 Órdenes
-    </button>
-
+    <button onclick="location.href='index.html'">🏠 Inicio</button>
+    <button onclick="location.href='clientes.html'">▶ Clientes</button>
+    <button onclick="location.href='maquinas.html'">⚙ Máquinas</button>
+    <button onclick="location.href='ordenes.html'">📋 Órdenes</button>
 </div>
 
 <hr>
+
+<button onclick="nuevaOrden()">📋 Nueva Orden</button>
+<br><br>
+
+<!-- Campo oculto por si después querés editar órdenes -->
+<input type="hidden" id="orden_id" value="">
+
+<!-- Al cambiar el cliente, cargamos sus máquinas específicas -->
+<label>CLIENTE </label>
+<select id="orden_cliente_id" onchange="cargarMaquinasDelCliente(this.value)">
+    <option value="">Seleccione un cliente</option>
+</select>
+<br><br>
+
+<label>MÁQUINA </label>
+<select id="orden_maquina_id">
+    <option value="">Seleccione primero un cliente</option>
+</select>
+<br><br>
+
+<label>ESTADO </label>
+<select id="estado_orden">
+    <option value="Ingresada">📥 Ingresada</option>
+    <option value="En Reparacion">👨‍💻 En Reparación</option>
+    <option value="Lista">✅ Lista / Para Retirar</option>
+    <option value="Entregada">🚚 Entregada</option>
+</select>
+<br><br>
+
+<textarea id="falla_reportada" placeholder="Falla reportada por el cliente / Tareas a realizar" rows="4" style="width: 100%;"></textarea><br><br>
+
+<textarea id="obs_orden" placeholder="Observaciones internas / Repuestos utilizados" rows="3" style="width: 100%;"></textarea><br><br>
+
+<button id="btn_guardar_orden" onclick="guardarOrden()">
+    Guardar Orden de Trabajo
+</button>
+
+<hr>
+
+<h2>Órdenes Registradas</h2>
+<div id="listaOrdenes"></div>
+
+</div>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script src="js/app.js"></script>
-	
 </body>
-
 </html>

@@ -11,7 +11,9 @@
 
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+
+	<body onload="cargarClientesSelect()">
+
 	<div class="container">
     
 <h1>🔧 KAI Service</h1>
@@ -24,7 +26,7 @@
     </button>
 
     <button onclick="location.href='clientes.html'">
-        👤 Clientes
+         ▶ Clientes
     </button>
 
     <button onclick="location.href='maquinas.html'">
@@ -40,9 +42,9 @@
 <hr>
 
 <h2>Nueva Máquina</h2>
-
-<label>Cliente</label><br>
-<select id="cliente_id">
+<!--- Identificación de máquina --->
+<input type="hidden" id="maquina_id" value=""> 
+<label>CLIENTE  </label><select id="cliente_id">
     <option value="">Seleccione un cliente</option>
 </select>
 
@@ -63,7 +65,8 @@
 <textarea id="obs_maquina"
 placeholder="Observaciones"></textarea><br><br>
 
-<button onclick="guardarMaquina()">
+<!--- Agrega unn ID a la máquina al guardar --->
+<button id="btn_guardar" onclick="guardarMaquina()">
 Guardar Máquina
 </button>
 
@@ -77,7 +80,6 @@ Actualizar Máquinas
 
 <div id="listaMaquinas"></div>
 </div>
-
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

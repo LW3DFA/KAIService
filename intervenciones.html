@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--- KaiService - Control de service --->
+<!--- Fernando Albornoz @Copyright 2026 V1.0    --->
+<!--- Reparaciones / Intervenciones Service  --->
+
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes - KAI Service</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+	<div class="container">
+    
+	<h1>🔧 KAI Service</h1>
+	<p>Sistema de Gestión de Reparaciones</p>
+
+	<div class="menu-superior">
+
+		<button onclick="location.href='index.html'">
+        🏠 Inicio
+		</button>
+
+		<button onclick="location.href='clientes.html'">
+        ▶ Clientes
+		</button>
+
+		<button onclick="location.href='maquinas.html'">
+        ⚙ Máquinas
+		</button>
+
+		<button onclick="location.href='ordenes.html'">
+        📋 Órdenes
+		</button>
+
+	</div>
+
+	<hr>
+
+	<h2>🔧 Reparaciones / Intervenciones</h2>
+
+	<div id="datosOrden"></div>
+
+	<hr>
+
+	<input type="hidden" id="intervencion_id">
+
+	<label>Trabajo realizado</label><br>
+	<textarea id="trabajo_realizado"
+	rows="4"
+	style="width:100%;"></textarea>
+
+	<br><br>
+
+	<label>Tiempo empleado (horas)</label><br>
+	<input type="number"
+	id="tiempo_empleado"
+	step="0.5">
+
+	<br><br>
+
+	<label>Repuestos utilizados</label><br>
+	<input type="text"
+	id="repuestos_utilizados">
+
+	<br><br>
+
+	<label>Observaciones</label><br>
+	<textarea id="obs_intervencion"
+	rows="3"
+	style="width:100%;"></textarea>
+
+	<br><br>
+
+	<button onclick="guardarIntervencion()">
+	💾 Guardar Intervención
+	</button>
+
+	<hr>
+
+	<h3>Historial</h3>
+
+	<div id="listaIntervenciones"></div>
+	
+</div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/app.js"></script>
+	
+</body>
+
+</html>
