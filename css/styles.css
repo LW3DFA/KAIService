@@ -25,7 +25,10 @@ button {
     cursor: pointer;
 	font-weight:bold;
 	font-size:16px;
+	transition: all 0.2s ease;
+	height: 42px;
 }
+
 
 .accion-btn {
     padding: 5px 10px;
@@ -36,7 +39,14 @@ button {
 }
 
 button:hover {
-    opacity: 0.9;
+    background: #0d47a1;
+    color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 input,
@@ -69,10 +79,21 @@ h1 {
 
 .menu-superior {
     margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .menu-superior button {
-    margin-right: 10px;
+
+    height: 42px;
+    min-width: 140px;
+	padding: 5px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 table {
