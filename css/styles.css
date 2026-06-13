@@ -67,12 +67,11 @@ table {
 #listaOrdenes,
 #listaMaquinas,
 #listaClientes,
-
-#historialMaquina {
-
+#historialMaquina, 
+#listaIntervenciones {
     overflow-x: auto;
-
 }
+
 
 
 th {
