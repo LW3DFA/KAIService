@@ -291,7 +291,9 @@ async function listarMaquinas() {
                 <td>${m.serie || ''}</td>
                 <td>
                     <button onclick="cargarFormularioEditarMaquina('${maquinaString}')">✏️ Editar</button>
-                </td>
+					<button	class="accion-btn" onclick="verHistorialMaquina(${m.id})">📜 Historial</button>
+				</td>
+				
             </tr>
         `;
     });
@@ -315,6 +317,190 @@ function cargarFormularioEditarMaquina(maquinaBase64) {
 
     document.getElementById('btn_guardar').innerText = "⚠️ Actualizar Máquina";
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+// =========================
+// HISTORIAL DE MAQUINA (OT)
+// =========================
+function verHistorialMaquina(id) {
+
+    window.location.href =
+        `historial_maquinas.html?maquina=${id}`;
+}
+// ======================
+// OBTENER MAQUINA ACTUAL
+// ======================
+function obtenerMaquinaActual() {
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    return params.get('maquina');
+}
+
+// ======================
+// DATOS DE LA MAQUINA
+// ======================
+async function cargarDatosMaquina() {
+
+    const maquina_id =
+        obtenerMaquinaActual();
+
+    const { data, error } =
+        await supabaseClient
+        .from('maquinas')
+        .select(`
+            *,
+            clientes(nombre)
+        `)
+        .eq('id', maquina_id)
+        .single();
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    document.getElementById(
+        'datosMaquina'
+    ).innerHTML = `
+
+        <div class="tarjeta-ot">
+
+            <h3>
+                ⚙ ${data.maquina || ''}
+            </h3>
+
+            <p>
+                <strong>👤 Cliente:</strong>
+                ${data.clientes?.nombre || ''}
+            </p>
+
+            <p>
+                <strong>🏷 Marca:</strong>
+                ${data.marca || '-'}
+            </p>
+
+            <p>
+                <strong>📦 Modelo:</strong>
+                ${data.modelo || '-'}
+            </p>
+
+            <p>
+                <strong>🔢 Serie:</strong>
+                ${data.serie || '-'}
+            </p>
+
+            <p>
+                <strong>📍 Ubicación:</strong>
+                ${data.ubicacion || '-'}
+            </p>
+
+            <p>
+                <strong>📝 Observaciones:</strong>
+                ${data.observaciones || '-'}
+            </p>
+
+        </div>
+    `;
+}
+
+// ======================
+// HISTORIAL MAQUINA
+// ======================
+async function listarHistorialMaquina() {
+
+    const maquina_id =
+        obtenerMaquinaActual();
+
+    const { data, error } =
+        await supabaseClient
+        .from('ordenes')
+        .select(`
+            *,
+            clientes(nombre)
+        `)
+        .eq('maquina_id', maquina_id)
+        .order(
+            'fecha_ingreso',
+            { ascending: false }
+        );
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    let totalHoras = 0;
+
+    let html = `
+        <table border="1" width="100%">
+            <thead>
+                <tr>
+                    <th>OT</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Horas</th>
+                    <th>Falla</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    data.forEach(o => {
+
+        totalHoras +=
+            Number(o.horas_totales || 0);
+
+        let fecha =
+            o.fecha_ingreso
+            ? o.fecha_ingreso
+                .split('-')
+                .reverse()
+                .join('/')
+            : '-';
+
+        html += `
+            <tr>
+
+                <td>
+                    #${o.id}
+                </td>
+
+                <td>
+                    ${fecha}
+                </td>
+
+                <td>
+                    ${o.estado}
+                </td>
+
+                <td>
+                    ${o.horas_totales || 0}
+                </td>
+
+                <td>
+                    ${o.falla_reportada || ''}
+                </td>
+
+            </tr>
+        `;
+    });
+
+    html += `
+        </tbody>
+        </table>
+
+        <br>
+
+        <strong>
+            Total histórico de horas:
+            ${totalHoras.toFixed(2)} hs
+        </strong>
+    `;
+
+    document.getElementById(
+        'historialMaquina'
+    ).innerHTML = html;
 }
 
 // ========================================================
@@ -808,5 +994,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	cargarDatosOrden();
     listarIntervenciones();
     calcularHorasOT();
+	}
+	if (window.location.pathname.includes('historial_maquinas.html')) {
+    console.log('Historial máquina cargado');
+    cargarDatosMaquina();
+    listarHistorialMaquina();
 	}
 });

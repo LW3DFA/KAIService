@@ -1,5 +1,6 @@
-# KAIService
+﻿# KAI Service
 
+Versión funcional 0.4
 Sistema web de gestión de reparaciones.
 
 ## Tecnologías
@@ -14,9 +15,39 @@ Sistema web de gestión de reparaciones.
 
 Versión inicial.
 Conexión a Supabase operativa.
-Pantalla Princpal básica INICIO - CLIENTES - MAQUINAS - ORDENES
+Pantalla Principal básica 
+
+
+Backend:
+- Supabase
+
+
+
+Frontend:
+- HTML
+- CSS
+- JavaScript
+
+Módulos implementados:
+
+- Clientes
+- Máquinas
+
+- Órdenes de Trabajo
+
+- Intervenciones
+
+- Historial por Máquina
+
+- 08/06/2026
 - Alta y modificación de CLIENTES
 - Alta y modificación de MAQUINAS
 - Alta y modificación de ORDENES
 - Historial de ORDENES por MAQUINAS
-- Acumulación de HS.
+- Acumulación de HS por Orden.
+
+-12/06/2026 - Historial de Máquina
+
+
+
+

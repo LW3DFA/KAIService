@@ -2,9 +2,8 @@
 <html lang="es">
 <!--- KaiService - Control de service --->
 <!--- Fernando Albornoz @Copyright 2026 V1.0    --->
-<!--- Consulta de OT Service  --->
+<!--- Historial Máquinas --->
 
-<!-- Máquinas -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +13,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
-	<body onload="cargarClientesSelect()">
+	<body>
 
 	<div class="container">
     
@@ -40,48 +39,16 @@
     </button>
 
 </div>
+<hr>
+
+<div id="datosMaquina"></div>
 
 <hr>
 
-<h2>Nueva Máquina</h2>
+<h2>📜 Historial de Reparaciones</h2>
 
-<!--- Identificación de máquina --->
-<input type="hidden" id="maquina_id" value=""> 
-<label>CLIENTE  </label><select id="cliente_id">
-    <option value="">Seleccione un cliente</option>
-</select>
+<div id="historialMaquina"></div>
 
-<br><br>
-
-<input type="text" id="tipo_maquina" placeholder="Tipo de máquina"><br><br>
-
-<input type="text" id="maquina" placeholder="Máquina"><br><br>
-
-<input type="text" id="marca" placeholder="Marca"><br><br>
-
-<input type="text" id="modelo" placeholder="Modelo"><br><br>
-
-<input type="text" id="serie" placeholder="N° Serie"><br><br>
-
-<input type="text" id="ubicacion" placeholder="Ubicación"><br><br>
-
-<textarea id="obs_maquina"
-placeholder="Observaciones"></textarea><br><br>
-
-<!--- Agrega unn ID a la máquina al guardar --->
-<button id="btn_guardar" onclick="guardarMaquina()">
-Guardar Máquina
-</button>
-
-<hr>
-
-<h2>Máquinas Registradas</h2>
-
-<button onclick="listarMaquinas()">
-	🚀 Actualizar Máquinas
-</button>
-
-<div id="listaMaquinas"></div>
 </div>
 
     <!-- Scripts -->
