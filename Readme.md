@@ -46,8 +46,34 @@ Módulos implementados:
 - Historial de ORDENES por MAQUINAS
 - Acumulación de HS por Orden.
 
-- 12/06/2026 - Historial de Máquina
+-12/06/2026 
+- Historial de Máquina
+- Ver OT dentro del Historial
 
 
 
+Lo que ya tenemos
 
+
+✅ Clientes
+
+✅ Máquinas
+
+✅ Historial de máquina
+
+✅ Órdenes de trabajo
+
+✅ Intervenciones
+
+✅ Horas acumuladas por OT
+
+✅ Horas históricas por máquina
+
+✅ Edición de clientes, máquinas y OT
+
+✅ Cantidad de OT realizadas
+
+✅ Última reparación
+
+✅ OT abiertas
+✅ Navegación entre módulos

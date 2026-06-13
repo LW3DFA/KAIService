@@ -67,6 +67,7 @@ table {
 #listaOrdenes,
 #listaMaquinas,
 #listaClientes,
+
 #historialMaquina {
 
     overflow-x: auto;
@@ -80,10 +81,12 @@ th {
 }
 
 th,
+
 td {
     border: 1px solid #ddd;
     padding: 8px;
 }
+
 h1 {
     color: #1976d2;
 }
@@ -96,7 +99,6 @@ h1 {
 }
 
 .menu-superior button {
-
     height: 42px;
     min-width: 140px;
 	padding: 5px 15px;
@@ -123,4 +125,24 @@ tr:hover {
         max-width: 100%;
     }
 
+}
+
+.estadisticas {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-left: 5px solid #1976d2;
+    border-radius: 8px;
+}
+
+.estadisticas h3 {
+    margin-top: 0;
+    color: #1976d2;
+}
+
+.filtros-ordenes {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
 }

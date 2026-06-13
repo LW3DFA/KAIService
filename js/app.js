@@ -431,8 +431,22 @@ async function listarHistorialMaquina() {
     }
 
     let totalHoras = 0;
+	let totalOT = data.length;
+	let otAbiertas = data.filter(o => o.estado !== 'Entregada').length;
+	let ultimaReparacion = '-';
 
-    let html = `
+	if (data.length > 0) {
+
+		ultimaReparacion =
+			data[0].fecha_ingreso
+			? data[0].fecha_ingreso
+				.split('-')
+				.reverse()
+				.join('/')
+			: '-';
+	}
+    
+	let html = `
         <table border="1" width="100%">
             <thead>
                 <tr>
@@ -441,6 +455,7 @@ async function listarHistorialMaquina() {
                     <th>Estado</th>
                     <th>Horas</th>
                     <th>Falla</th>
+					<th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -462,41 +477,56 @@ async function listarHistorialMaquina() {
         html += `
             <tr>
 
-                <td>
-                    #${o.id}
-                </td>
+                <td>#${o.id}</td>
 
-                <td>
-                    ${fecha}
-                </td>
+                <td>${fecha}</td>
 
-                <td>
-                    ${o.estado}
-                </td>
+                <td>${o.estado}</td>
 
-                <td>
-                    ${o.horas_totales || 0}
-                </td>
+                <td>${o.horas_totales || 0}</td>
 
-                <td>
-                    ${o.falla_reportada || ''}
-                </td>
-
+                <td>${o.falla_reportada || ''}</td>
+			
+				<td>
+				<button class="accion-btn"onclick="abrirOT(${o.id})">
+                📋 Ver OT
+				</button>
+				</td>
             </tr>
         `;
     });
 
     html += `
-        </tbody>
-        </table>
+    </tbody>
+    </table>
 
-        <br>
+    <br>
 
-        <strong>
-            Total histórico de horas:
+    <div class="estadisticas">
+
+        <h3>📊 Estadísticas</h3>
+
+        <p>
+            <strong>OT realizadas:</strong>
+            ${totalOT}
+        </p>
+
+        <p>
+            <strong>Horas históricas:</strong>
             ${totalHoras.toFixed(2)} hs
-        </strong>
-    `;
+        </p>
+
+        <p>
+            <strong>Última reparación:</strong>
+            ${ultimaReparacion}
+        </p>
+		
+		<p>
+			<strong>OT abiertas:</strong>
+			${otAbiertas}
+		</p>
+    </div>
+`;
 
     document.getElementById(
         'historialMaquina'
@@ -619,15 +649,29 @@ async function guardarOrden() {
 // ===================================
 // LISTAR Y EDITAR ORDENES DE TRABAJO
 // ===================================
-async function listarOrdenes() {
-    const { data, error } = await supabaseClient
-        .from('ordenes')
-        .select(`
-            *,
-            clientes(nombre),
-            maquinas(maquina, marca, modelo)
-        `)
-        .order('id', { ascending: false });
+async function listarOrdenes(estadoFiltro = null) {
+	let consulta = supabaseClient
+    .from('ordenes')
+    .select(`
+        *,
+        clientes(nombre),
+        maquinas(maquina, marca, modelo)
+    `);
+
+	if (estadoFiltro) {
+
+    consulta =
+        consulta.eq(
+            'estado',
+            estadoFiltro
+        );
+	}
+
+	const { data, error } =
+    await consulta.order(
+        'id',
+        { ascending: false }
+    );
 
     if (error) {
         console.error("Error al listar órdenes:", error);
@@ -872,6 +916,15 @@ async function cargarDatosOrden() {
             </p>
         </div>
     `;
+}
+
+// ======================
+// ABRIR OT DESDE HISTORIAL
+// ======================
+function abrirOT(id) {
+
+    window.location.href =
+        `intervenciones.html?orden=${id}`;
 }
 
 // ======================
