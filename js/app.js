@@ -1,7 +1,7 @@
 console.log("app.js cargado");
 
 // ========================================================
-// SECCIÓN: CONEXIÓN Y DIAGNÓSTICO
+//            SECCIÓN: CONEXIÓN Y DIAGNÓSTICO
 // ========================================================
 
 async function probarConexion() {
@@ -16,7 +16,7 @@ async function probarConexion() {
 }
 
 // ========================================================
-// SECCIÓN: GESTIÓN DE CLIENTES
+//               SECCIÓN: GESTIÓN DE CLIENTES
 // ========================================================
 
 async function guardarCliente() {
@@ -166,7 +166,7 @@ async function buscarClientes() {
 }
 
 // ========================================================
-// SECCIÓN: GESTIÓN DE MÁQUINAS
+//             SECCIÓN: GESTIÓN DE MÁQUINAS
 // ========================================================
 
 async function cargarClientesSelect() {
@@ -186,6 +186,39 @@ async function cargarClientesSelect() {
     select.innerHTML = '<option value="">Seleccione un cliente</option>';
 
     data.forEach(cliente => {
+        select.innerHTML += `
+            <option value="${cliente.id}">
+                ${cliente.nombre}
+            </option>
+        `;
+    });
+}
+
+async function cargarFiltroClientesMaquinas() {
+
+    const { data, error } =
+        await supabaseClient
+        .from('clientes')
+        .select('*')
+        .order('nombre');
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const select =
+        document.getElementById(
+            'filtro_cliente_maquinas'
+        );
+
+    if (!select) return;
+
+    select.innerHTML =
+        '<option value="">Todos los clientes</option>';
+
+    data.forEach(cliente => {
+
         select.innerHTML += `
             <option value="${cliente.id}">
                 ${cliente.nombre}
@@ -253,15 +286,32 @@ async function guardarMaquina() {
     listarMaquinas();
 }
 
-async function listarMaquinas() {
-    const { data, error } = await supabaseClient
-        .from('maquinas')
-        .select(`
-            *,
-            clientes(nombre)
-        `)
-        .order('maquina');
+async function listarMaquinas(clienteFiltro = null) {
+    let consulta =
+    supabaseClient
+    .from('maquinas')
+    .select(`
+        *,
+        clientes(nombre)
+    `);
 
+	const clienteSeleccionado =
+    document.getElementById(
+        'filtro_cliente_maquinas'
+    )?.value;
+
+	if (clienteSeleccionado) {
+
+    consulta =
+        consulta.eq(
+            'cliente_id',
+            clienteSeleccionado
+        );
+}
+
+const { data, error } =
+    await consulta.order('maquina');
+        
     if (error) {
         console.error(error);
         return;
@@ -318,17 +368,17 @@ function cargarFormularioEditarMaquina(maquinaBase64) {
     document.getElementById('btn_guardar').innerText = "⚠️ Actualizar Máquina";
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-// =========================
-// HISTORIAL DE MAQUINA (OT)
-// =========================
+// ===========================
+//  HISTORIAL DE MAQUINA (OT)
+// ===========================
 function verHistorialMaquina(id) {
 
     window.location.href =
         `historial_maquinas.html?maquina=${id}`;
 }
-// ======================
-// OBTENER MAQUINA ACTUAL
-// ======================
+// ========================
+//  OBTENER MAQUINA ACTUAL
+// ========================
 function obtenerMaquinaActual() {
 
     const params =
@@ -338,7 +388,7 @@ function obtenerMaquinaActual() {
 }
 
 // ======================
-// DATOS DE LA MAQUINA
+//  DATOS DE LA MAQUINA
 // ======================
 async function cargarDatosMaquina() {
 
@@ -405,7 +455,7 @@ async function cargarDatosMaquina() {
 }
 
 // ======================
-// HISTORIAL MAQUINA
+//   HISTORIAL MAQUINA
 // ======================
 async function listarHistorialMaquina() {
 
@@ -534,7 +584,7 @@ async function listarHistorialMaquina() {
 }
 
 // ========================================================
-// SECCIÓN: ÓRDENES DE TRABAJO (OT)
+//             SECCIÓN: ÓRDENES DE TRABAJO (OT)
 // ========================================================
 async function cargarClientesSelectOrdenes() {
     const { data, error } = await supabaseClient.from('clientes').select('id,nombre').order('nombre');
@@ -697,12 +747,15 @@ async function listarOrdenes(estadoFiltro = null) {
     data.forEach(o => {
         let fechaFormateada = o.fecha_ingreso ? o.fecha_ingreso.split('T')[0].split('-').reverse().join('/') : '-';
 
+// ============
+//  COLORES OT
+// ============
         let colorEstado = "";
-        if (o.estado === "Ingresada") colorEstado = "#e2e3e5";    
-        if (o.estado === "En Reparacion") colorEstado = "#fff3cd"; 
-        if (o.estado === "Lista") colorEstado = "#d1e7dd";         
-        if (o.estado === "Entregada") colorEstado = "#cff4fc";     
-
+        if (o.estado === "Ingresada") colorEstado = "#f8d7da";   // rojo suave
+        if (o.estado === "En Reparacion") colorEstado = "#fff3cd";   // amarillo
+        if (o.estado === "Lista") colorEstado = "#d1e7dd";   // verde tenue
+        if (o.estado === "Entregada") colorEstado = "#a5f090";     // verde
+//------------------------------------------------------------------------------
         html += `
 			<tr style="background-color: ${colorEstado};">
 				<td><strong>#${o.id}</strong></td>
