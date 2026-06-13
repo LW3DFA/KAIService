@@ -46,7 +46,7 @@ Módulos implementados:
 - Historial de ORDENES por MAQUINAS
 - Acumulación de HS por Orden.
 
--12/06/2026 - Historial de Máquina
+- 12/06/2026 - Historial de Máquina
 
 
 
