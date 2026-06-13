@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
-	<body onload="cargarClientesSelect()">
+	<body onload="cargarClientesSelect(); cargarFiltroClientesMaquinas(); listarMaquinas();">
 
 	<div class="container">
     
@@ -78,8 +78,18 @@ Guardar Máquina
 
 <h2>Máquinas Registradas</h2>
 
+<select
+    id="filtro_cliente_maquinas"
+    onchange="listarMaquinas()">
+
+    <option value="">
+        Todos los clientes
+    </option>
+
+</select>
+
 <button onclick="listarMaquinas()">
-	🚀 Actualizar Máquinas
+    🚀 Actualizar Máquinas
 </button>
 
 <div id="listaMaquinas"></div>

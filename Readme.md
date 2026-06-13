@@ -55,25 +55,26 @@ Módulos implementados:
 Lo que ya tenemos
 
 
-✅ Clientes
+✅ Crear clientes
 
-✅ Máquinas
+✅ Editar clientes
 
-✅ Historial de máquina
+✅ Crear máquinas
 
-✅ Órdenes de trabajo
+✅ Editar máquinas
 
-✅ Intervenciones
+✅ Filtrar máquinas por cliente
 
-✅ Horas acumuladas por OT
+✅ Crear OT
 
-✅ Horas históricas por máquina
+✅ Editar OT y cambiar estado
 
-✅ Edición de clientes, máquinas y OT
+✅ Ver historial completo de una máquina
 
-✅ Cantidad de OT realizadas
+✅ Ver OT asociadas
 
-✅ Última reparación
+✅ Registrar intervenciones
 
-✅ OT abiertas
-✅ Navegación entre módulos
+✅ Acumular horas automáticamente
+
+✅ Ver estadísticas básicas
