@@ -1079,9 +1079,10 @@ async function listarIntervenciones() {
             <tr>
                 <th>Fecha</th>
                 <th>Trabajo</th>
-                <th>Horas</th>
-				<th>Mano Obra</th>
-				<th>Repuestos</th>
+                <th>Hs</th>
+				<th>M/O</th>
+				<th>Rep.</th>
+				<th>Total</th>
             </tr>
     `;
 
@@ -1093,7 +1094,10 @@ async function listarIntervenciones() {
 			.reverse()
 			.join('/')
 			: '';
-
+			const totalIntervencion =
+			Number(i.costo_mano_obra || 0) +
+			Number(i.costo_repuestos || 0);
+//kai
         html += `
             <tr>
                 <td>${fecha}</td>
@@ -1101,6 +1105,7 @@ async function listarIntervenciones() {
                 <td>${i.tiempo_empleado || 0}</td>
 				<td>$${Number(i.costo_mano_obra || 0).toFixed(2)}</td>
 				<td>$${Number(i.costo_repuestos || 0).toFixed(2)}</td>
+				<td><strong>$${totalIntervencion.toFixed(2)}</strong></td>
             </tr>
         `;
     });
