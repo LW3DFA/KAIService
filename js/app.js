@@ -633,9 +633,9 @@ async function cargarMaquinasDelCliente(clienteId) {
         `;
     });
 }
-// ===========
-// GUARDAR OT
-// ===========
+// ============
+//  GUARDAR OT
+// ============
 async function guardarOrden() {
 	//const ordenId = document.getElementById('orden_id').value;
     const id = document.getElementById('orden_id').value;
@@ -696,9 +696,9 @@ async function guardarOrden() {
     
     listarOrdenes();
 }
-// ===================================
-// LISTAR Y EDITAR ORDENES DE TRABAJO
-// ===================================
+// =====================================
+//  LISTAR Y EDITAR ORDENES DE TRABAJO
+// =====================================
 async function listarOrdenes(estadoFiltro = null) {
 	let consulta = supabaseClient
     .from('ordenes')
@@ -731,21 +731,37 @@ async function listarOrdenes(estadoFiltro = null) {
     let html = `
         <table border="1" width="100%">
             <thead>
-                <tr>
-                    <th>N° OT</th>
-                    <th>Fecha Ingreso</th>
-                    <th>Cliente</th>
-                    <th>Máquina</th>
-                    <th>Falla Reportada</th>
-                    <th>Estado</th>
-					<th>Acciones</th>
-				</tr>
+            <tr>
+				<th>N°OT</th>
+				<th>Fecha Ingreso</th>
+				<th>Cliente</th>
+				<th>Máquina</th>
+				<th>Hs</th>
+				<th>M/O</th>
+				<th>Rep.</th>
+				<th>Total</th>
+				<th>Falla Reportada</th>
+				<th>Estado</th>
+				<th>Acciones</th>
+			</tr>
 			</thead>
             <tbody>
     `;
 
     data.forEach(o => {
-        let fechaFormateada = o.fecha_ingreso ? o.fecha_ingreso.split('T')[0].split('-').reverse().join('/') : '-';
+
+    let fechaFormateada =
+        o.fecha_ingreso
+        ? o.fecha_ingreso
+            .split('T')[0]
+            .split('-')
+            .reverse()
+            .join('/')
+        : '-';
+
+    const totalOT =
+        Number(o.costo_mano_obra || 0) +
+        Number(o.costo_repuestos || 0);
 
 // ============
 //  COLORES OT
@@ -762,9 +778,13 @@ async function listarOrdenes(estadoFiltro = null) {
 				<td>${fechaFormateada}</td>
 				<td>${o.clientes?.nombre || 'Desconocido'}</td>
 				<td>${o.maquinas?.maquina || ''} ${o.maquinas?.marca || ''}</td>
+				<td>${Number(o.horas_totales || 0).toFixed(2)}</td>
+				<td>$${Number(o.costo_mano_obra || 0).toFixed(0)}</td>
+				<td>$${Number(o.costo_repuestos || 0).toFixed(0)}</td>
+				<td><strong>$${totalOT.toFixed(0)}</strong></td>
 				<td>${o.falla_reportada || ''}</td>
 				<td><strong>${o.estado}</strong></td>
-			<td style="white-space: nowrap;">
+				<td style="white-space: nowrap;">
 				<button onclick="editarOrden(${o.id})">
 				✏️ Editar
 				</button>
@@ -781,9 +801,9 @@ async function listarOrdenes(estadoFiltro = null) {
     document.getElementById('listaOrdenes').innerHTML = html;
 }
 
-// ==========
-// EDITAR OT
-// ==========
+// ===========
+//  EDITAR OT
+// ===========
 async function editarOrden(id) {
 
     const { data, error } = await supabaseClient
@@ -867,7 +887,7 @@ function obtenerOrdenActual() {
 }
 
 // ======================
-// GUARDAR INTERVENCION
+//  GUARDAR INTERVENCION
 // ======================
 async function guardarIntervencion() {
 
@@ -878,8 +898,22 @@ async function guardarIntervencion() {
 
     const tiempo_empleado =
         document.getElementById('tiempo_empleado').value;
+	
+	const costo_mano_obra =
+    Number(
+        document.getElementById(
+            'costo_mano_obra'
+        ).value || 0
+    );
 
-    const repuestos_utilizados =
+	const costo_repuestos =
+    Number(
+        document.getElementById(
+            'costo_repuestos'
+        ).value || 0
+    );
+    
+	const repuestos_utilizados =
         document.getElementById('repuestos_utilizados').value;
 
     const observaciones =
@@ -898,7 +932,9 @@ async function guardarIntervencion() {
                 trabajo_realizado,
                 tiempo_empleado:
                     tiempo_empleado || 0,
-                repuestos_utilizados,
+                costo_mano_obra,
+				costo_repuestos,
+				repuestos_utilizados,
                 observaciones
             }
         ]);
@@ -918,9 +954,11 @@ async function guardarIntervencion() {
 
 	listarIntervenciones();
 	calcularHorasOT();
+	calcularCostosOT();
 }
+
 // ======================
-// CARGAR DATOS DE OT
+//   CARGAR DATOS DE OT
 // ======================
 async function cargarDatosOrden() {
 
@@ -971,9 +1009,9 @@ async function cargarDatosOrden() {
     `;
 }
 
-// ======================
-// ABRIR OT DESDE HISTORIAL
-// ======================
+// =========================
+//  ABRIR OT DESDE HISTORIAL
+// =========================
 function abrirOT(id) {
 
     window.location.href =
@@ -981,7 +1019,7 @@ function abrirOT(id) {
 }
 
 // ======================
-// CALCULAR HORAS
+//     CALCULAR HORAS
 // ======================
 async function calcularHorasOT() {
 
@@ -1018,9 +1056,9 @@ async function calcularHorasOT() {
         .eq('id', orden_id);
 }
 
-// ====================
-// LISTAR REPARACIONES
-// ====================
+// =====================================
+// LISTAR REPARACIONES / INTERVENCIONES
+// =====================================
 async function listarIntervenciones() {
 
     const orden_id = obtenerOrdenActual();
@@ -1042,6 +1080,8 @@ async function listarIntervenciones() {
                 <th>Fecha</th>
                 <th>Trabajo</th>
                 <th>Horas</th>
+				<th>Mano Obra</th>
+				<th>Repuestos</th>
             </tr>
     `;
 
@@ -1059,6 +1099,8 @@ async function listarIntervenciones() {
                 <td>${fecha}</td>
                 <td>${i.trabajo_realizado || ''}</td>
                 <td>${i.tiempo_empleado || 0}</td>
+				<td>$${Number(i.costo_mano_obra || 0).toFixed(2)}</td>
+				<td>$${Number(i.costo_repuestos || 0).toFixed(2)}</td>
             </tr>
         `;
     });
@@ -1070,8 +1112,56 @@ async function listarIntervenciones() {
     ).innerHTML = html;
 }
 
+// ======================
+//   CALCULAR COSTOS OT
+// ======================
+async function calcularCostosOT() {
+
+    const orden_id = obtenerOrdenActual();
+
+    const { data, error } =
+        await supabaseClient
+        .from('intervenciones')
+        .select(`
+            costo_mano_obra,
+            costo_repuestos
+        `)
+        .eq('orden_id', orden_id);
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    let totalMO = 0;
+    let totalREP = 0;
+
+    data.forEach(i => {
+
+        totalMO +=
+            Number(i.costo_mano_obra || 0);
+
+        totalREP +=
+            Number(i.costo_repuestos || 0);
+
+    });
+
+    const { error: errorUpdate } =
+        await supabaseClient
+        .from('ordenes')
+        .update({
+            costo_mano_obra: totalMO,
+            costo_repuestos: totalREP
+        })
+        .eq('id', orden_id);
+
+    if (errorUpdate) {
+        console.error(errorUpdate);
+    }
+}
+
 // ========================================================
-// CONTROL DE AUTOMATIZACIÓN (AL CARGAR CADA PÁGINA)
+//    CONTROL DE AUTOMATIZACIÓN (AL CARGAR CADA PÁGINA)
 // ========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1100,6 +1190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	cargarDatosOrden();
     listarIntervenciones();
     calcularHorasOT();
+	calcularCostosOT();
 	}
 	if (window.location.pathname.includes('historial_maquinas.html')) {
     console.log('Historial máquina cargado');
