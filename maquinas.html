@@ -44,6 +44,25 @@
 
 <hr>
 
+<h2>Máquinas Registradas</h2>
+
+<select
+    id="filtro_cliente_maquinas"
+    onchange="listarMaquinas()">
+
+    <option value="">
+        Todos los clientes
+    </option>
+
+</select>
+
+<button onclick="listarMaquinas()">
+    🚀 Actualizar Máquinas
+</button>
+
+<div id="listaMaquinas"></div>
+
+
 <h2>Nueva Máquina</h2>
 
 <!--- Identificación de máquina --->
@@ -76,23 +95,6 @@ Guardar Máquina
 
 <hr>
 
-<h2>Máquinas Registradas</h2>
-
-<select
-    id="filtro_cliente_maquinas"
-    onchange="listarMaquinas()">
-
-    <option value="">
-        Todos los clientes
-    </option>
-
-</select>
-
-<button onclick="listarMaquinas()">
-    🚀 Actualizar Máquinas
-</button>
-
-<div id="listaMaquinas"></div>
 </div>
 
     <!-- Scripts -->
