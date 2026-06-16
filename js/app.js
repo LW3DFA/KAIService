@@ -1180,6 +1180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cargarClientesSelect();
     }
     if (document.getElementById('listaMaquinas')) {
+        cargarFiltroClientesMaquinas(); // 👈 Filtro por clientes
         listarMaquinas();
     }
 
