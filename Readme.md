@@ -1,7 +1,7 @@
-﻿# KAI Service
+﻿# KAI Track
 
 Versión funcional 0.4
-Sistema web de gestión de reparaciones.
+Sistema Gestión de Servicio Técnico.
 
 ## Tecnologías
 
