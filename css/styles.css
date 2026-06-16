@@ -27,7 +27,7 @@ body {
 .container {
     max-width: 1200px;
     margin: auto;
-    background: #f5f5f5; // Blanco
+    background: #f5f5f5; /* Blanco */
     padding: 10px;
     border-radius: 10px;
 }
