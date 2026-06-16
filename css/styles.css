@@ -8,24 +8,26 @@ body {
 
 .app-header {
     width: 100%;
-    padding: 1px 0 10px 0; /* Espacio superior e inferior antes del menú */
+    padding: 1px 0 15px 0; /* Espacio superior e inferior antes del menú */
     display: block;
+    text-align: center;    /* Asegura el centrado de elementos internos si cambian de tipo */
 }
 
 .app-logo {
-    width: 100%;          /* Fuerza a que ocupe el ancho del container */
-    max-width: 1200px;     /* No se estira más allá del límite del container */
+    width: 80%;           /* Fuerza a que ocupe el ancho del container */
+    max-width: 1200px;    /* No se estira más allá del límite del container */
     height: auto;         /* Mantiene la proporción perfecta del diseño original */
     display: block;
+    margin: 0 auto;       /* ¡CLAVE! Centra la imagen horizontalmente sin importar el ancho */
     border-radius: 8px;   /* Un leve redondeado en las esquinas para acompañar el diseño */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Sombra muy sutil para darle presencia */
+    /* box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Sombra muy sutil para darle presencia */
 }
 
 /* Contenedor blanco */
 .container {
     max-width: 1200px;
     margin: auto;
-    background: white;
+    background: #f5f5f5; // Blanco
     padding: 10px;
     border-radius: 10px;
 }
