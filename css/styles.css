@@ -4,6 +4,64 @@ body {
     margin: 20px;
 }
 
+/* Estilos para la cabecera */
+.app-header {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espacio entre el logo y el texto */
+    padding: 15px 0;
+}
+.app-logo {
+    height: 80px; /* Ajustá la altura según cómo se vea en tu pantalla */
+    width: auto;  /* Mantiene la proporción de la imagen */
+    display: block;
+}
+
+.brand-info h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #ffffff; /* Ajustá al color de tu fuente */
+}
+
+.brand-info h4 {
+    margin: 5px 0 0 0;
+    font-weight: normal;
+    color: #aaaaaa;
+}
+
+.version-tag {
+    display: block;
+    margin-top: 5px;
+    color: #777777;
+    font-size: 11px;
+}
+
+.app-logo {
+    height: 80px; /* Ajustá la altura según cómo se vea en tu pantalla */
+    width: auto;  /* Mantiene la proporción de la imagen */
+    display: block;
+}
+
+.brand-info h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #ffffff; /* Ajustá al color de tu fuente */
+}
+
+.brand-info h4 {
+    margin: 5px 0 0 0;
+    font-weight: normal;
+    color: #aaaaaa;
+}
+
+.version-tag {
+    display: block;
+    margin-top: 5px;
+    color: #777777;
+    font-size: 11px;
+}
+
+/* Contenedor blanco */
 .container {
     max-width: 1200px;
     margin: auto;
@@ -89,7 +147,7 @@ td {
 h1 {
     color: #1976d2;
 }
-
+/* Estilos básicos para el menú */
 .menu-superior {
     margin-bottom: 20px;
     display: flex;
