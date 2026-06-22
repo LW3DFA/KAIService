@@ -16,6 +16,19 @@
 </head>
 
 <body>
+<script>
+
+if (
+    sessionStorage.getItem(
+        'kai_auth'
+    ) !== 'ok'
+) {
+
+    location.href =
+        'login.html';
+}
+
+</script>
     <div class="container">
     
         <!-- Cabecera con Logo Banner Completo -->
@@ -41,6 +54,9 @@
             <button onclick="location.href='ordenes.html'">
                 📋&nbsp;Órdenes
             </button>
+			<button onclick="logout()">
+				🚪 Salir
+			</button>
         </nav>
 
         <hr>

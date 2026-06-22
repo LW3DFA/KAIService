@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Acceso KAI Service</title>
+
+<link rel="stylesheet"
+href="css/styles.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔧 KAI Service</h1>
+
+<h3>Acceso</h3>
+
+<input
+    type="password"
+    id="password"
+    placeholder="Contraseña">
+
+<br><br>
+
+<button onclick="login()">
+Ingresar
+</button>
+
+</div>
+
+<script>
+
+async function login() {
+
+    const password =
+        document
+        .getElementById('password')
+        .value;
+
+    const response =
+        await fetch(
+            '/.netlify/functions/check-password',
+            {
+                method:'POST',
+                body: JSON.stringify({
+                    password
+                })
+            }
+        );
+
+    if (response.ok) {
+
+        sessionStorage.setItem(
+            'kai_auth',
+            'ok'
+        );
+
+        location.href =
+            'index.html';
+
+    } else {
+
+        alert(
+            'Contraseña incorrecta'
+        );
+    }
+}
+
+</script>
+
+</body>
+
+</html>

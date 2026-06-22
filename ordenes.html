@@ -16,6 +16,19 @@
 </head>
 
 <body>
+ <script>
+
+if (
+    sessionStorage.getItem(
+        'kai_auth'
+    ) !== 'ok'
+) {
+
+    location.href =
+        'login.html';
+}
+
+</script>
     <div class="container">
     
         <!-- Cabecera con Logo Banner Completo -->
@@ -25,23 +38,26 @@
         </header>
 
         <!-- Menú de Navegación justo debajo del Logo -->
-<div class="menu-superior">
+        <nav class="menu-superior">
+            <button onclick="location.href='index.html'">
+                🏠&nbsp;Inicio
+            </button>
 
-    <button onclick="location.href='index.html'">
-        🏠&nbsp;Inicio
-    </button>
+            <button onclick="location.href='clientes.html'">
+                🧑‍💼&nbsp;Clientes
+            </button>
 
-    <button onclick="location.href='clientes.html'">
-        ‍🧑‍💼&nbsp;Clientes
-    </button>
+            <button onclick="location.href='maquinas.html'">
+                🔧&nbsp;Máquinas
+            </button>
 
-    <button onclick="location.href='maquinas.html'">
-        🔧&nbsp;Máquinas
-    </button>
-
-    <button onclick="location.href='ordenes.html'">
-        📋&nbsp;Órdenes
-    </button>
+            <button onclick="location.href='ordenes.html'">
+                📋&nbsp;Órdenes
+            </button>
+			<button onclick="logout()">
+				🚪 Salir
+			</button>
+        </nav>
 
 </div>
 
