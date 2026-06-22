@@ -1,6 +1,17 @@
 console.log("app.js cargado");
 
 // ========================================================
+//        FUNCION LOGOUT si hay error de Password
+// ========================================================
+
+window.logout = function () {
+
+    sessionStorage.removeItem('kai_auth');
+
+    location.href = 'login.html';
+};
+
+// ========================================================
 //            SECCIÓN: CONEXIÓN Y DIAGNÓSTICO
 // ========================================================
 
