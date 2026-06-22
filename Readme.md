@@ -1,6 +1,6 @@
 ﻿# KAI Track
 
-Versión funcional 0.4
+Versión funcional 0.5
 Sistema Gestión de Servicio Técnico.
 
 ## Tecnologías
@@ -50,10 +50,15 @@ Módulos implementados:
 - Historial de Máquina
 - Ver OT dentro del Historial
 
-
+-22/06/2026
+- Login protegido mediante Netlify Functions
+- Password almacenado en Environment Variables
+- Protección de páginas mediante sessionStorage
+- Botón Logout funcional
 
 Lo que ya tenemos
 
+✅ Login protegido
 
 ✅ Crear clientes
 
